@@ -1,0 +1,65 @@
+package Testing.Testing_selenium;
+
+
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.support.ui.Wait;
+
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class App  {
+
+	private static WebDriver driver;
+
+	private static void pathStepUp(String browser) {
+		if (browser.equalsIgnoreCase("chrome")) {
+			System.setProperty("webdriver.chrome.driver",
+					"C:\\Users\\Admin\\eclipse-workspace\\Testing_selenium2\\target\\chromedriver.exe");
+			driver = new ChromeDriver();
+		} else if (browser.equalsIgnoreCase("edge")) {
+			WebDriverManager.edgedriver().setup();
+			driver = new EdgeDriver();
+		} else if (browser.equalsIgnoreCase("firefox")) {
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
+		} else if (browser.equalsIgnoreCase("IE")) {
+			WebDriverManager.iedriver().setup();
+			driver = new InternetExplorerDriver();
+		} else {
+			System.out.println("not able to launch browser");
+		}
+	}
+
+	private static void navigateToApp() {
+		driver.get("https://www.amazon.in/");
+		driver.manage().window().maximize();
+	}
+
+	private static void quitBrowser() {
+		driver.quit();
+	}
+
+	private static void waitForBrowser() {
+		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+	}
+
+	public static void main(String[] args) {
+		pathStepUp("edge");
+	
+		navigateToApp();
+		String url = driver.getCurrentUrl();
+		System.out.println(url);
+		//waitForBrowser();
+		
+		quitBrowser();
+		
+	
+	}
+}
